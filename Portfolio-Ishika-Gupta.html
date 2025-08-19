@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ishika Gupta Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.min.js"></script>
+
+  <style>
+    /* Reset and base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #0f172a; /* Dark mode default */
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+    a {
+      color: #7dd3fc;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    a:hover {
+      color: #bae6fd;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: #e0e7ff;
+    }
+    p {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    ul {
+      padding-left: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    li {
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+    }
+    .container {
+  max-width: 100vw !important;    /* Remove horizontal width limits on container */
+  padding: 0 !important;          /* Remove padding on container to let sections control spacing */
+  margin: 0 auto !important;
+  flex-grow: 0;
+}
+    nav {
+      background: #1e293b;
+      box-shadow: 0 0 10px #3b82f6cc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      color: #dbeafe;
+    }
+    nav .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      color: #7dd3fc;
+      font-weight: 800;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    nav ul li {
+      margin-left: 2rem;
+    }
+    nav ul li a {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #e0e7ffcc;
+    }
+    nav ul li a:hover {
+      color: #7dd3fc;
+      border-bottom: 2px solid #7dd3fc;
+      padding-bottom: 3px;
+    }
+
+    /* Section styles */
+    section {
+  min-height: 90vh;                 /* Make each section at least 90% of viewport height */
+  width: 90vw;                     /* Almost full viewport width */
+  margin: 2vh auto;                /* Small vertical margin to keep some background visible */
+  padding: 4rem 3rem;              /* Increase padding inside for spacing of content */
+  box-shadow: 0 12px 40px rgb(66 75 93 / 0.15); /* stronger shadow for separation */
+  border-radius: 15px;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  display: block;
+  max-width: none;                 /* Remove container width limits */
+}
+    #about {
+      background: #13161c;
+      color: #dbeafe;
+    }
+    #experience {
+      background: #0f172a;
+      color: #94a3b8;
+    }
+    #education {
+      background: #e5e9d9;
+      color: #e0e7ff;
+    }
+    #skills {
+      background: #181e3e;
+      color: #bfdbfe;
+    }
+    #services {
+      background: #334155;
+      color: #f0f9ff;
+    }
+    #projects {
+      background: #1e293b;
+      color: #93c5fd;
+    }
+    #craft {
+      background: #262a44;
+      color: #cbd5e1;
+    }
+    #contact {
+      background: #0f172a;
+      color: #cbd5e1;
+    }
+
+    section h2 {
+      text-align: center;
+      font-size: 2.3rem;
+      margin-bottom: 2rem;
+      letter-spacing: 1.5px;
+    }
+
+    #about img.profile-pic {
+      float: right;
+      max-width: 180px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #2563ebaa;
+      margin-left: 1.5rem;
+    }
+    @media (max-width: 640px) {
+      #about img.profile-pic {
+        float: none;
+        display: block;
+        margin: 1rem auto;
+        max-width: 140px;
+      }
+    }
+
+    .timeline {
+      border-left: 4px solid;
+      border-color: currentColor;
+      padding-left: 1.25rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .timeline-item {
+      margin-bottom: 1.75rem;
+      position: relative;
+      padding-left: 1rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -11px;
+      top: 5px;
+      width: 15px;
+      height: 15px;
+      background: currentColor;
+      border-radius: 50%;
+      box-shadow: 0 0 6px currentColor;
+    }
+    .timeline-item h4 {
+      margin-bottom: 0.4rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+      gap: 1.3rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .skill-card {
+      background: rgba(255 255 255 / 0.1);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+      cursor: default;
+      transition: box-shadow 0.3s ease;
+
+}
+
+    .skill-card:hover {
+      box-shadow: 0 0 35px #2563ebcc;
+    }
+    .skill-icon {
+      width: 46px;
+      height: 46px;
+      margin-bottom: 0.5rem;
+      filter: drop-shadow(0 0 6px #2563ebbb);
+    }
+    .skill-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: inherit;
+    }
+
+    .services {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .service-card {
+      background: rgba(37 99 235 / 0.15);
+      border-radius: 15px;
+      padding: 1.8rem;
+      width: 260px;
+      box-shadow: 0 0 20px #2563eb55;
+      transition: background 0.3s ease;
+      cursor: default;
+      text-align: center;
+      color: #e0f9ff;
+    }
+    .service-card:hover {
+      background: #2563eb;
+      box-shadow: 0 0 35px #7dd3fcaa;
+    }
+    .service-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.6rem;
+      font-weight: 700;
+    }
+    .service-desc {
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .project-card {
+      background: #1e293b88;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 20px #3b82f655;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 40px #60a5faaa;
+    }
+    .project-image {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      filter: brightness(0.9);
+    }
+    .project-info {
+      padding: 1.25rem;
+      color: #e0e7ff;
+    }
+    .project-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.4rem;
+    }
+    .project-desc {
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.35;
+      color: #cbd5e1cc;
+    }
+
+    .craft-textarea {
+      width: 100%;
+      background: #262a44;
+      border: none;
+      color: #cbd5e1;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.15rem;
+      min-height: 140px;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: inset 0 0 15px #7dd3fcaa;
+      resize: vertical;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    form {
+      max-width: 450px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    label {
+      font-weight: 600;
+      font-size: 1rem;
+      color: inherit;
+    }
+    input, textarea {
+      background: #1e293b;
+      border: 2px solid #7dd3fcaa;
+      border-radius: 15px;
+      padding: 0.8rem 1rem;
+      font-size: 1.05rem;
+      font-family: 'Roboto', sans-serif;
+      transition: border-color 0.3s ease;
+      color: #cbd5e1;
+      resize: vertical;
+    }
+    input:focus, textarea:focus {
+      background: #334155;
+      border-color: #60a5fa;
+      color: #e0e7ff;
+    }
+    button.submit-btn {
+      background: #3b82f6;
+      border: none;
+      padding: 0.85rem 2rem;
+      font-weight: 700;
+      color: #e0f2fe;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      align-self: center;
+      width: 180px;
+      transition: background-color 0.3s ease;
+    }
+    button.submit-btn:hover {
+      background: #7dd3fc;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 1rem;
+      color: #94a3b8;
+      background: #1e293b;
+      border-top: 1px solid #2563eb;
+    }
+
+   
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      nav ul {
+        display: none;
+      }
+      .skills-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .services {
+        flex-direction: column;
+        width: 100%;
+      }
+      #about img.profile-pic {
+        float: none;
+        margin: 1rem auto 2rem auto;
+        max-width: 130px;
+        display: block;
+      }
+    
+
+
+    }
+  </style>
+
+</head>
+<body class="dark">
+
+
+
+    <nav>
+    <div class="logo">IG</div>
+    <ul aria-label="Primary Navigation">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#craft">Craft</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="Ishika-Gupta-FinTech-Graduate.pdf" download>Download Resume</a></li>
+    </ul>
+  </nav>
+
+  <main class="container" role="main">
+    <section id="about" aria-labelledby="about-title" style="position: relative; overflow: hidden; padding: 3rem 1rem 4rem; border-radius: 15px;">
+
+  <!-- Background video -->
+  <video autoplay muted loop playsinline
+    style="
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      z-index: 0;
+      border-radius: 15px;
+    ">
+    <source src="57860-486852732_small.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Flexbox content, more compact -->
+  <div style="
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  background: hwb(245 22% 42% / 0.75);
+  border-radius: 18px;
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 3rem 3rem;
+">
+
+    <img src="Airbrush-AI_CLOTHES_CHANGER-2025-08-01T13_37_57-1754055477500 (1).jpg" alt="Ishika Gupta" style="width:180px; border-radius: 15px; box-shadow: 0 0 20px #2563ebaa;" />
+    <div style="flex: 1;">
+      <h2 id="about-title" style="margin-bottom: 1rem;">About Me</h2>
+      <p>Hello, I’m Ishika, a dedicated data analyst, FinTech graduate and AI enthusiast passionate about turning complex data into meaningful insight and action.</p>
+      <p>I work to bridge technology and finance to craft smarter solutions that empower businesses and communities.</p>
+    </div>
+  </div>
+
+</section>
+
+
+
+
+    <section id="experience" aria-labelledby="experience-title" style="position: relative; overflow: hidden;">
+
+  <!-- Background video -->
+  <video autoplay muted loop playsinline
+    style="
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      z-index: 0;
+    ">
+    <source src="183107-870151708_small.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Content container with overlay -->
+  <div class="timeline" role="list" style="position: relative; z-index: 1; background: rgba(15, 23, 42, 0.7); padding: 3rem 1rem 4rem; border-radius: 15px;">
+    <h2 id="experience-title" style="text-align: center; font-size: 2.3rem; margin-bottom: 2rem; letter-spacing: 1.5px;">Professional Experience</h2>
+    
+    <!-- Existing timeline items unchanged -->
+    <article class="timeline-item" role="listitem">
+      <h4>Data Analyst Intern – Deloitte Australia</h4>
+      <img src="deloitte-logo.png" alt="Deloitte Logo" style="width:100px; margin-bottom: 12px;" />
+      <p>Developed interactive Tableau dashboards to analyze telemetry data across multiple factory locations, which helped uncover key machine downtime patterns and enabled timely operational interventions to improve efficiency. In addition, I classified and analyzed gender pay equality data using Excel, categorizing scores to highlight equity issues and support client initiatives focused on workplace fairness. Through these projects, I continuously expanded my technical skills while adapting to diverse client requirements in a fast-paced, data-driven environment, ultimately delivering insights that drove both operational improvements and strategic equity initiatives.</p>
+    </article>
+    <article class="timeline-item" role="listitem">
+      <h4>Data Analyst Intern – Accenture UK</h4>
+      <img src="accenture-logo.png" alt="Accenture Logo" style="width:100px; margin-bottom: 12px;" />
+      <p>Delivered strategic insights to stakeholders by analyzing campaign performance data, which shaped campaign strategies and enhanced ROI measurement. Additionally, I supported data storytelling efforts by translating complex metrics into clear, actionable recommendations, enabling stakeholders to make informed decisions and optimize overall campaign effectiveness.</p>
+    </article>
+    <article class="timeline-item" role="listitem">
+      <h4>Business Associate – Gulliver’s World</h4>
+      <img src="gullivers-world-logo.png" alt="Gullivers World Logo" style="width:100px; margin-bottom: 12px;" />
+      <p>Built Python-based rota forecasting models that improved workforce planning accuracy by 20% and reduced scheduling conflicts. Alongside this, I conducted Excel-based vendor benchmarking analyses, which drove cost savings and enabled more optimized decision-making. I also partnered with commercial teams to deliver performance dashboards, enhancing visibility into key KPIs and driving operational improvements across the business.</p>
+    </article>
+  </div>
+</section>
+
+
+   <section id="education" aria-labelledby="education-title" style="position: relative; overflow: hidden;">
+
+  <!-- Background video -->
+  <video autoplay muted loop playsinline
+    style="
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      z-index: 0;
+    ">
+    <source src="185096-874643413_small.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Content overlay -->
+  <div class="timeline" role="list" style="position: relative; z-index: 1; background: rgba(1, 1, 0, 0.75); padding: 3rem 1rem 4rem; border-radius: 15px;">
+    <h2 id="education-title" style="text-align: center; font-size: 2.3rem; margin-bottom: 2rem; letter-spacing: 1.5px;">Education</h2>
+    <article class="timeline-item" role="listitem" style="display:flex; align-items:center; gap: 1rem;">
+      <img src="Masters-Degree.jpg" alt="Master's Degree Logo" style="width:80px; border-radius: 8px;" />
+      <div>
+        <h4>Master’s in Financial Technology (FinTech)</h4>
+        <p>University of Liverpool — Graduated with Merit</p>
+      </div>
+    </article>
+    <article class="timeline-item" role="listitem" style="display:flex; align-items:center; gap: 1rem;">
+      <img src="Bachelors-Degree.jpg" alt="Bachelor Degree Logo" style="width:80px; border-radius: 8px;" />
+      <div>
+        <h4>Bachelor in Computer Applications</h4>
+        <p>Graduated with distinction</p>
+      </div>
+    </article>
+  </div>
+
+</section>
+
+
+    <section id="skills" aria-labelledby="skills-title" style="position: relative; overflow: hidden;">
+
+  <!-- Background video -->
+  <video autoplay muted loop playsinline
+    style="
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      z-index: 0;
+    ">
+    <source src="130273-746686709_small.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Content overlay -->
+  <div style="position: relative; z-index: 1; padding: 3rem 1rem 4rem; background: rgba(24, 30, 62, 0.75); border-radius: 15px;">
+    <h2 id="skills-title">Skills</h2>
+    <div class="skills-grid" role="list">
+      <div class="skill-card" role="listitem" tabindex="0">
+        <img src="https://img.icons8.com/color/48/000000/python.png" alt="Python Icon" class="skill-icon" style="display: block; margin: 0 auto 8px;" />
+        <span class="skill-name">Python</span>
+      </div>
+      <div class="skill-card" role="listitem" tabindex="0">
+        <img src="https://img.icons8.com/color/48/000000/sql.png" alt="SQL Icon" class="skill-icon" style="display: block; margin: 0 auto 8px;" />
+        <span class="skill-name">SQL</span>
+      </div>
+      <div class="skill-card" role="listitem" tabindex="0">
+        <img src="https://img.icons8.com/color/48/000000/tableau-software.png" alt="Tableau Icon" class="skill-icon" style="display: block; margin: 0 auto 8px;" />
+        <span class="skill-name">Tableau</span>
+      </div>
+      <div class="skill-card" role="listitem" tabindex="0">
+        <img src="powerBI.png" alt="Power BI Icon" class="skill-icon" style="display: block; margin: 0 auto 8px;"/>
+        <span class="skill-name">Power BI</span>
+      </div>
+      <div class="skill-card" role="listitem" tabindex="0">
+        <img src="https://img.icons8.com/color/48/000000/microsoft-excel-2019.png" alt="Excel Icon" class="skill-icon" style="display: block; margin: 0 auto 8px;"/>
+        <span class="skill-name">Excel</span>
+      </div>
+      <div class="skill-card" role="listitem" tabindex="0">
+        <img src="https://img.icons8.com/ios-filled/48/7dd3fc/speech-bubble.png" alt="Communication Icon" class="skill-icon" />
+        <span class="skill-name">Communication</span>
+      </div>
+      <div class="skill-card" role="listitem" tabindex="0">
+        <img src="https://img.icons8.com/ios-filled/48/7dd3fc/conference-call.png" alt="Collaboration Icon" class="skill-icon" />
+        <span class="skill-name">Collaboration</span>
+      </div>
+      <div class="skill-card" role="listitem" tabindex="0">
+        <img src="adaptible.png" alt="Adaptable Icon" class="skill-icon" />
+        <span class="skill-name">Adaptable</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+    <section id="services" aria-labelledby="services-title" style="position: relative; overflow: hidden; padding: 3rem 1rem 4rem; border-radius: 15px;">
+
+  <!-- Background video -->
+  <video autoplay muted loop playsinline
+    style="
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      z-index: 0;
+      border-radius: 15px;
+    ">
+    <source src="159049-818026306_small.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Content overlay -->
+  <div style="position: relative; z-index: 1; background: rgba(51, 65, 85, 0.75); border-radius: 15px; padding: 1rem;">
+    <h2 id="services-title" style="text-align: center; color: #f0f9ff; margin-bottom: 2rem;">Services</h2>
+    <div class="services" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; max-width: 800px; margin: 0 auto;">
+      <div class="service-card" style="flex: 1 1 calc(50% - 1rem); box-sizing: border-box;">
+        <h3 class="service-title">Data Analysis</h3>
+        <p>Providing actionable insights from complex datasets with clarity and precision.</p>
+      </div>
+      <div class="service-card" style="flex: 1 1 calc(50% - 1rem); box-sizing: border-box;">
+        <h3 class="service-title">Developer</h3>
+        <p>Building intelligent, friendly assistants that streamline workflows and ease decision-making.</p>
+      </div>
+      <div class="service-card" style="flex: 1 1 calc(50% - 1rem); box-sizing: border-box;">
+        <h3 class="service-title">Dashboard Design</h3>
+        <p>Creating visual dashboards for clear KPI tracking and dynamic data storytelling.</p>
+      </div>
+      <div class="service-card" style="flex: 1 1 calc(50% - 1rem); box-sizing: border-box;">
+        <h3 class="service-title">Data Consulting</h3>
+        <p>Offering guidance and tools for ESG impact analysis and sustainable financial growth.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+    <section id="projects" aria-labelledby="projects-title">
+      <h2 id="projects-title">Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card" tabindex="0">
+          <img src="pc-voice-assist.png" alt="Voice Assistant Project" class="project-image" />
+          <div class="project-info">
+            <h3 class="project-title">Voice-Activated AI Assistant for PC</h3>
+            <p>Developed voice assistants integrated with analytics tools for seamless workflow automation.</p>
+          </div>
+        </div>
+        <div class="project-card" tabindex="0">
+          <img src="carbon-Calculator.png" alt="Dashboard Project" class="project-image" />
+          <div class="project-info">
+            <h3 class="project-title">Carbon Calculator and Blockchain Portfolio</h3>
+            <p>Built SQL Calculator for ESG metrics and blockchain analytics visualization.</p>
+          </div>
+        </div>
+        <div class="project-card" tabindex="0">
+          <img src="chatbot.png" alt="Sentiment Analysis Chatbot Project" class="project-image" />
+          <div class="project-info">
+            <h3 class="project-title">Sentiment Analysis Chatbot</h3>
+            <p>Designed NLP chatbots to offer real-time insight on user sentiment for businesses.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="craft" aria-labelledby="craft-title" style="position: relative; overflow: hidden;">
+
+  <!-- Background video -->
+  <video autoplay muted loop playsinline
+    style="
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      z-index: 0;
+    ">
+    <source src="20072-307163785_small.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Content overlay -->
+  <div style="position: relative; z-index: 1; padding: 3rem 1rem 4rem; background: rgba(8, 9, 15, 0.75); border-radius: 15px;">
+    <div style="display:flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+      <img src="mandala1.jpg" alt="Mandala Art 1" style="width:180px; border-radius: 15px; box-shadow: 0 0 20px #2563ebaa;" />
+      <img src="mandala2.jpg" alt="Mandala Art 2" style="width:180px; border-radius: 15px; box-shadow: 0 0 20px #2563ebaa;" />
+      <img src="mandala3.jpg" alt="Mandala Art 3" style="width:180px; border-radius: 15px; box-shadow: 0 0 20px #2563ebaa;" />
+    </div>
+
+    <h2 id="craft-title">Craft</h2>
+    <p>I am also drawn to some creative pursuits for which I do mandala art, which defines me as a creative soul at heart, I unwind by crafting meaningful art — blending logic and imagination harmoniously.</p>
+  </div>
+
+</section>
+
+
+   <section id="contact" aria-labelledby="contact-title" style="position: relative; overflow: hidden; padding: 3rem 1rem 4rem; border-radius: 15px;">
+
+  <!-- Background video -->
+  <video autoplay muted loop playsinline
+    style="
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      z-index: 0;
+      border-radius: 15px;
+    ">
+    <source src="6269-190550883_small.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Flex container for left/right layout -->
+  <div style="
+    position: relative;
+    z-index: 1;
+    background: rgba(15, 23, 42, 0.75);
+    border-radius: 15px;
+    padding: 2rem 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    justify-content: center;
+  ">
+    <!-- Contact details (left) -->
+    <div style="flex: 1; min-width: 230px;">
+      <h2 id="contact-title" style="margin-bottom: 1rem; text-align: left;">Contact Me</h2>
+      <p style="font-size:1.2rem; margin-bottom:1rem; font-weight:600; text-align: left;">
+        ☕ If you’re open for a coffee and a chat, I’m just a message away!
+      </p>
+      <div style="font-size:1.1rem; margin-top:1rem; color:inherit; text-align: left;">
+        <p><strong>Phone:</strong> <a href="tel:+919599090982" style="color:#7dd3fc;">+91 95990 90982</a></p>
+        <p><strong>Email:</strong> <a href="mailto:gishika.igupta@gmail.com" style="color:#7dd3fc;">gishika.igupta@gmail.com</a></p>
+        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/ishika-gupta-73b7b837a" target="_blank" rel="noopener" style="color:#7dd3fc;">linkedin.com/in/ishikagupta</a></p>
+        <p><strong>GitHub:</strong> <a href="https://github.com/Gishika04" target="_blank" rel="noopener" style="color:#7dd3fc;">github.com/ishikagupta</a></p>
+      </div>
+    </div>
+    <!-- Contact image (right, larger) -->
+    <div style="flex: 0 0 260px; text-align: right;">
+      <img src="contact-me.png"
+           alt="Meetup or Connection"
+           style="width: 250px; height: auto; border-radius: 15px; box-shadow: 0 0 20px #2563ebaa; margin-bottom:1rem;" />
+    </div>
+  </div>
+</section>
+
+
+
+
+  </main>
+
+  <footer>
+    &copy; 2025 Ishika Gupta — Copyright.
+  </footer>
+
+  <script>
+    const body = document.body;
+    
+
+  </script>
+
+
+
+</body>
+</html>
